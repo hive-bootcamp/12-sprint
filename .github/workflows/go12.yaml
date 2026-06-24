@@ -1,0 +1,23 @@
+name: kimpintyau
+
+on:
+  push:
+    paths:
+      - '**.go'
+  pull_request:
+    paths:
+      - '**.go'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: golang:1.25
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Unit Tests
+        run: GOOS=linux GOARCH=amd64 go test
+
+      - name: Vet
+        run: |
+          go vet ./...
